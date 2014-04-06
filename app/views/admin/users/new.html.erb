@@ -1,0 +1,4 @@
+<h2>Create User</h2>
+<%= simple_form_for(@user, :url => admin_users_path, :html => {:class => 'form-vertical' }) do |f| %>
+  <%= render :partial => 'form', :locals => { :f => f } %>
+<% end %>

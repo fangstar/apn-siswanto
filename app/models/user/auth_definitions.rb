@@ -2,11 +2,11 @@ module User::AuthDefinitions
   extend ActiveSupport::Concern
   
    included do
-
+    attr_accessor :confirm_user
     # Include default devise modules. Others available are:
     # :token_authenticatable, :confirmable,
     # :lockable, :timeoutable and :omniauthable
-    devise :database_authenticatable, :registerable,
+    devise :database_authenticatable,
            :recoverable, :rememberable, :trackable, :validatable, :confirmable, :omniauthable
 
     ## Database authenticatable
@@ -43,7 +43,7 @@ module User::AuthDefinitions
 
     index({ email: 1 }, { unique: true, background: true })
 
-
+    after_save :confirm_new_user
     # Password not required when using omniauth
     def password_required?
       super && identities.empty?
@@ -52,6 +52,10 @@ module User::AuthDefinitions
     # Confirmation not required when using omniauth
     def confirmation_required?
       super && identities.empty?
+    end
+
+    def confirm_new_user
+      confirm! if confirm_user
     end
 
     def update_with_password(params, *options)
