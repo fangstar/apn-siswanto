@@ -1,0 +1,7 @@
+  <%= f.input :first_name, :autofocus => true %>
+  <%= f.input :last_name %>
+  <%= f.input :email, :required => true %>
+  <%= f.input :password, :required => true %>
+  <%= f.input :password_confirmation, :required => true %>
+  <%= f.input :confirm_user, as: :boolean, inline_label: 'Confirm User', :label => false %> 
+  <%= f.button :submit, 'Submit', :class => 'btn-primary' %>

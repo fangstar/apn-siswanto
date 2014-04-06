@@ -1,6 +1,10 @@
 ApnSiswanto::Application.routes.draw do
   
   
+  get 'admin', :to => 'admin#index', :via => [:get, :post]
+  namespace :admin do
+    resources :users, :except => [:index]
+  end
   authenticated :user do
     root to: 'home#index', as: :authenticated_root
   end
@@ -10,12 +14,10 @@ ApnSiswanto::Application.routes.draw do
   end
 
   devise_for :users, controllers: {
-    registrations: "users/registrations", 
     passwords: "users/passwords", 
     omniauth_callbacks: "users/omniauth_callbacks"
   }
 
-  resources :users
   get "home/index"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
