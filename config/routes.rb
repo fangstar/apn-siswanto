@@ -1,10 +1,14 @@
 ApnSiswanto::Application.routes.draw do
   
-  
+
   get 'admin', :to => 'admin#index', :via => [:get, :post]
   namespace :admin do
     resources :users, :except => [:index]
   end
+  
+  get  'users/edit', to: 'users#edit', as: 'edit_user'
+  put  'users/update', to: 'users#update', as: 'update_user'
+
   authenticated :user do
     root to: 'home#index', as: :authenticated_root
   end
