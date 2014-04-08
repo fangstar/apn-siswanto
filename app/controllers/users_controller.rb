@@ -1,63 +1,24 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
-
-  def index
-    authorize! :index, @user, :message => 'Not authorized as an administrator.'
-    @users = User.all
-  end
-
-  def show
-  end
-
-  def new
-    @user = User.new
-  end
-
+  before_action :authenticate_user!
+  
   def edit
-  end
-
-  def create
-    authorize! :create, @user, :message => 'Not authorized as an administrator.'
-
-    @user = User.new(user_params)
-    respond_to do |format|
-      if @user.save
-        format.html { redirect_to @user, notice: 'User was successfully created.' }
-      else
-        format.html { render action: 'new' }
-      end
-    end
+    @user = current_user
   end
 
   def update
-    authorize! :update, @user, :message => 'Not authorized as an administrator.'
-    respond_to do |format|
-
-      if @user.update_attributes(user_params)
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
-      else
-        format.html { render action: 'edit' }
-      end
-    end
-  end
-
-  def destroy
-    authorize! :destroy, @user, :message => 'Not authorized as an administrator.'
-
-    @user.destroy
-    respond_to do |format|
-      format.html { redirect_to users_url }
+    @user = current_user
+    if @user.update_with_password(user_params)
+      flash[:success] = "Your Profile Has Been Updated"
+      redirect_to root_path
+    else
+      render :edit
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_user
-      @user = User.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def user_params
-      params.require(:user).permit(:email, :first_name, :last_name, :roles => [])
-    end
+  def user_params
+    params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation, :current_password)
+  end
+
 end
