@@ -39,3 +39,7 @@ gem "omniauth"
 gem "omniauth-facebook"
 gem "omniauth-twitter"
 gem "hashugar", github: "alex-klepa/hashugar"
+
+# Added by Mitchell
+gem 'kaminari'
+gem 'bootstrap-datepicker-rails'

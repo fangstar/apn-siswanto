@@ -10,7 +10,7 @@ ApnSiswanto::Application.routes.draw do
   put  'users/update', to: 'users#update', as: 'update_user'
 
   authenticated :user do
-    root to: 'home#index', as: :authenticated_root
+    root to: 'registries#index', as: :authenticated_root
   end
 
   unauthenticated do
@@ -22,6 +22,7 @@ ApnSiswanto::Application.routes.draw do
     omniauth_callbacks: "users/omniauth_callbacks"
   }
 
+  resources :registries
   get "home/index"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
