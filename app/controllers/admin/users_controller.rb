@@ -22,7 +22,7 @@ class Admin::UsersController < ApplicationController
 
   def update
     respond_to do |format|
-      if @user.update_attributes(user_params)
+      if @user.update_attributes(user_params.delete_if{|k,v| v.blank?})
         format.html { redirect_to admin_path, notice: 'User was successfully updated.' }
       else
         format.html { render action: 'edit' }
