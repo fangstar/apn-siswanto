@@ -13,6 +13,8 @@ ApnSiswanto::Application.routes.draw do
     root to: 'registries#index', as: :authenticated_root
   end
 
+  get 'registries/data', to: 'registries#data', :defaults => { format: :json }
+
   unauthenticated do
     root to: "home#index"
   end

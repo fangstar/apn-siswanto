@@ -9,7 +9,9 @@ gem "therubyracer", platforms: :ruby
 gem "jquery-rails"
 gem "turbolinks"
 gem "jbuilder", "~> 1.2"
+gem 'jquery-datatables-rails', git: 'git://github.com/rweng/jquery-datatables-rails.git'
 group :development do
+  gem 'debugger'
   gem "guard-rspec"
   gem "pry"
   gem "quiet_assets"
@@ -24,7 +26,7 @@ end
 
 group :test do
   gem "mongoid-rspec"
-  gem "ffaker"
+  gem "faker"
   gem "simplecov", require: false
   gem "database_cleaner"
   gem "rb-inotify", "~> 0.9"
