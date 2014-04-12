@@ -1,3 +1,5 @@
+require 'mongoid/criteria'
+
 class Registry
   include Mongoid::Document
 
@@ -14,6 +16,32 @@ class Registry
   field :registered_date, type:DateTime
   field :products, type:Array
 
+  class << self
+    def to_datatable(registries, echo)
+      return { sEcho: 0,
+        iTotalRecords: 0,
+        iTotalDisplayRecords: 10,
+        aaData:  []
+      } if registries.blank?
+      header = ['first_name', 'last_name', 'dealer_account', 'dealer_store', 'region', 'territory', 'flagship', 'purchase_date', 'registered_date', 'products']
+      collections = []
+      registries.map do |registry|
+        data = []
+        header.each do |key|
+          data << registry.send(key) if registry.respond_to?(key) 
+        end 
+        collections << data
+      end
+      puts '============== ' + registries.length
+
+      { 
+        sEcho: 1,
+        iTotalRecords: Registry.count,
+        iTotalDisplayRecords: collections.length,
+        aaData:  collections
+      } 
+    end
+  end
 
   def self.search(fromDate,toDate,purchaseDate,dealerAccount,dealerName,flagship,
                   model,serial,territory,region,firstName,lastName)
@@ -103,20 +131,20 @@ class Registry
   			query[:last_name] = regex
   		end
 
-	  	Registry.where(query)
+	  	where(query)
   	end
   end
 
     def self.to_csv(options ={})
       CSV.generate(options) do |csv|
-#        csv << column_names
+        # csv << column_names
         column_names = ["Dealer Account", "Dealer", "Region", "Territory", "Warranty (Years)", 
           "Purchase Date","Register Date", 'Model', 'Serial Number', 'First Name', 'Last Name']
         mongo_column_names1 = ['dealer_account', 'purchase_date']
         mongo_column_names2 = ['first_name', 'last_name']
         # record = Array.new
         csv << column_names
-#        csv << %w['Dealer Account' 'Purchase Date' 'Model' 'Serial Number' 'First Name' 'Last Name']
+        # csv << %w['Dealer Account' 'Purchase Date' 'Model' 'Serial Number' 'First Name' 'Last Name']
         all.each do |person|
           person.products.each do |product|
             record = Array.new
@@ -146,12 +174,12 @@ class Registry
             temp = person.attributes.values_at('last_name')[0]
             record.push(temp);
 
-#            record.push(product.values_at('model').to_s)
-#            record.push(product.values_at('serial').to_s)
- #           record += ' ';
- #           record << person.attributes.values_at(*mongo_column_names2).to_s
-#            csv << person.products.model
-#            csv << person.dealer_account, person.purchase_date, product.model, product.serial, person.first_name, person.last_name
+           # record.push(product.values_at('model').to_s)
+           # record.push(product.values_at('serial').to_s)
+           # record += ' ';
+           # record << person.attributes.values_at(*mongo_column_names2).to_s
+           # csv << person.products.model
+           # csv << person.dealer_account, person.purchase_date, product.model, product.serial, person.first_name, person.last_name
           csv << record
           end
         end
