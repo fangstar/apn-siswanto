@@ -4,17 +4,17 @@ class RegistriesController < ApplicationController
   # GET /registries
   # GET /registries.json
   def index
-#    @registrations = Registration.all.page params[:page]
-#    @people = Registration.all.page params[:page]  
+   # @registrations = Registration.all.page params[:page]
+   # @people = Registration.all.page params[:page]  
    	@peoplenopage = Registry.search(params[:fromDate],params[:toDate],params[:purchaseDate],
       params[:dealerAccount],params[:dealerName],params[:flagship], params[:model], params[:serialNumber], 
       params[:territory], params[:region],
       params[:firstName], params[:lastName]).page(params[:page]).per(10)
-     @people = Registry.search(params[:fromDate],params[:toDate],params[:purchaseDate],
+    @people = Registry.search(params[:fromDate],params[:toDate],params[:purchaseDate],
       params[:dealerAccount],params[:dealerName],params[:flagship], params[:model], params[:serialNumber], 
       params[:territory], params[:region],
       params[:firstName], params[:lastName]).page(params[:page])
-    #@people = Registration.find( {first_name: "Angel"});
+    # @people = Registration.find( {first_name: "Angel"});
 
     respond_to do |format|
     	format.html
@@ -24,7 +24,7 @@ class RegistriesController < ApplicationController
       # params[:dealerAccount],params[:dealerName],params[:flagship], params[:model], params[:serialNumber], 
       # params[:territory], params[:region],
       # params[:firstName], params[:lastName]);
-    		send_data @peoplenopage.to_csv }
+    		send_data Registry.all.to_csv }
     	# format.xls { send_data @people.to_csv(col_sep: "\t") }
     end
   end

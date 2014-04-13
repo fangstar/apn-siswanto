@@ -18,11 +18,12 @@ class Registry
 
   class << self
     def to_datatable(registries, echo)
-      return { sEcho: 0,
-        iTotalRecords: 0,
-        iTotalDisplayRecords: 10,
-        aaData:  []
+      return {  sEcho: 0,
+                iTotalRecords: 0,
+                iTotalDisplayRecords: 10,
+                aaData:  []
       } if registries.blank?
+      
       header = ['first_name', 'last_name', 'dealer_account', 'dealer_store', 'region', 'territory', 'flagship', 'purchase_date', 'registered_date', 'products']
       collections = []
       registries.map do |registry|
@@ -32,7 +33,6 @@ class Registry
         end 
         collections << data
       end
-      puts '============== ' + registries.length
 
       { 
         sEcho: 1,
