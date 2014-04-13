@@ -11,6 +11,15 @@ FactoryGirl.define do
     flagship            { [true, false].sample }
     purchase_date       { Time.now + ((-5..-1).to_a.sample.days) }
     registered_date     { Time.now + ((-10..-6).to_a.sample.days) }
-    products            { ar = []; rand(10).times{ ar << Faker::Commerce.product_name }; ar }
+    products            do
+      ar = []
+      rand(10).times{ 
+        pinfo = {}
+        pinfo[:model]   = Faker::Commerce.product_name
+        pinfo[:serial]  = 'serial for ' + Faker::Commerce.product_name
+        ar << pinfo
+      }
+      ar
+    end 
   end
 end

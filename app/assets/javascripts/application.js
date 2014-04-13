@@ -21,8 +21,8 @@
 //= require dataTables/extras/ZeroClipboard.js
 //= require_tree .
 
-$(document).ready( function () {
-    $('#data-table').dataTable( {
+function callDataTable() {
+  $('#data-table').dataTable( {
         "bSort": false,
         "bPaginate": false,
         "sDom": 'T<"clear">lfrt',
@@ -30,4 +30,12 @@ $(document).ready( function () {
             "sSwfPath": "assets/dataTables/extras/swf/copy_csv_xls.swf"
         }
     } );
-} );
+}
+// $(document).ready( function () {
+//     callDataTable() ;
+// } );
+
+$(document).on('page:change', function() {
+  $("#data-table").dataTable().fnDestroy();
+  callDataTable(); 
+});
