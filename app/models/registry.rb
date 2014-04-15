@@ -135,55 +135,55 @@ class Registry
   	end
   end
 
-    def self.to_csv(options ={})
-      CSV.generate(options) do |csv|
-        # csv << column_names
-        column_names = ["Dealer Account", "Dealer", "Region", "Territory", "Warranty (Years)", 
-          "Purchase Date","Register Date", 'Model', 'Serial Number', 'First Name', 'Last Name']
-        mongo_column_names1 = ['dealer_account', 'purchase_date']
-        mongo_column_names2 = ['first_name', 'last_name']
-        # record = Array.new
-        csv << column_names
-        # csv << %w['Dealer Account' 'Purchase Date' 'Model' 'Serial Number' 'First Name' 'Last Name']
-        all.each do |person|
-          person.products.each do |product|
-            record = Array.new
-            temp = person.attributes.values_at('dealer_account')[0]
-            record.push(temp);
-            temp = person.attributes.values_at('dealer_store')[0]
-            record.push(temp);
-            temp = person.attributes.values_at('region')[0]
-            record.push(temp);
-            temp = person.attributes.values_at('territory')[0]
-            record.push(temp);
-            if (person.attributes.values_at('fs')[0] == 'FS')
-              record.push(2);
-            else
-              record.push(1)
-            end
-            temp = person.attributes.values_at('purchase_date')[0].strftime("%m/%d/%Y")
-            record.push(temp);
-            temp = person.attributes.values_at('registered_date')[0].strftime("%m/%d/%Y")
-            record.push(temp);
-            temp = product.values_at('model')[0]
-            record.push(temp);
-            temp = product.values_at('serial')[0]
-            record.push(temp);
-            temp = person.attributes.values_at('first_name')[0]
-            record.push(temp);
-            temp = person.attributes.values_at('last_name')[0]
-            record.push(temp);
-
-           # record.push(product.values_at('model').to_s)
-           # record.push(product.values_at('serial').to_s)
-           # record += ' ';
-           # record << person.attributes.values_at(*mongo_column_names2).to_s
-           # csv << person.products.model
-           # csv << person.dealer_account, person.purchase_date, product.model, product.serial, person.first_name, person.last_name
-          csv << record
+  def self.to_csv(options ={})
+    CSV.generate(options) do |csv|
+      # csv << column_names
+      column_names = ["Dealer Account", "Dealer", "Region", "Territory", "Warranty (Years)", 
+        "Purchase Date","Register Date", 'Model', 'Serial Number', 'First Name', 'Last Name']
+      mongo_column_names1 = ['dealer_account', 'purchase_date']
+      mongo_column_names2 = ['first_name', 'last_name']
+      # record = Array.new
+      csv << column_names
+      # csv << %w['Dealer Account' 'Purchase Date' 'Model' 'Serial Number' 'First Name' 'Last Name']
+      all.each do |person|
+        person.products.each do |product|
+          record = Array.new
+          temp = person.attributes.values_at('dealer_account')[0]
+          record.push(temp);
+          temp = person.attributes.values_at('dealer_store')[0]
+          record.push(temp);
+          temp = person.attributes.values_at('region')[0]
+          record.push(temp);
+          temp = person.attributes.values_at('territory')[0]
+          record.push(temp);
+          if (person.attributes.values_at('fs')[0] == 'FS')
+            record.push(2);
+          else
+            record.push(1)
           end
+          temp = person.attributes.values_at('purchase_date')[0].strftime("%m/%d/%Y")
+          record.push(temp);
+          temp = person.attributes.values_at('registered_date')[0].strftime("%m/%d/%Y")
+          record.push(temp);
+          temp = product.values_at('model')[0]
+          record.push(temp);
+          temp = product.values_at('serial')[0]
+          record.push(temp);
+          temp = person.attributes.values_at('first_name')[0]
+          record.push(temp);
+          temp = person.attributes.values_at('last_name')[0]
+          record.push(temp);
+
+         # record.push(product.values_at('model').to_s)
+         # record.push(product.values_at('serial').to_s)
+         # record += ' ';
+         # record << person.attributes.values_at(*mongo_column_names2).to_s
+         # csv << person.products.model
+         # csv << person.dealer_account, person.purchase_date, product.model, product.serial, person.first_name, person.last_name
+        csv << record
         end
       end
     end
+  end
 
 end
