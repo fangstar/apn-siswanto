@@ -6,14 +6,23 @@ class RegistriesController < ApplicationController
   def index
    # @registrations = Registration.all.page params[:page]
    # @people = Registration.all.page params[:page]  
-   	@peoplenopage = Registry.search(params[:fromDate],params[:toDate],params[:purchaseDate],
-      params[:dealerAccount],params[:dealerName],params[:flagship], params[:model], params[:serialNumber], 
-      params[:territory], params[:region],
-      params[:firstName], params[:lastName]).page(params[:page]).per(10)
-    @people = Registry.search(params[:fromDate],params[:toDate],params[:purchaseDate],
-      params[:dealerAccount],params[:dealerName],params[:flagship], params[:model], params[:serialNumber], 
-      params[:territory], params[:region],
-      params[:firstName], params[:lastName]).page(params[:page])
+    result        = Registry.search(params[:fromDate],
+                                    params[:toDate],
+                                    params[:purchaseDate],
+                                    params[:dealerAccount],
+                                    params[:dealerName],
+                                    params[:flagship], 
+                                    params[:model], 
+                                    params[:serialNumber], 
+                                    params[:territory], 
+                                    params[:region],
+                                    params[:firstName], 
+                                    params[:lastName])
+
+   	# @peoplenopage = result.page(params[:page]).per(10)
+    
+    @people       = result.page(params[:page]).per(10)
+
     # @people = Registration.find( {first_name: "Angel"});
 
     respond_to do |format|
@@ -24,7 +33,7 @@ class RegistriesController < ApplicationController
       # params[:dealerAccount],params[:dealerName],params[:flagship], params[:model], params[:serialNumber], 
       # params[:territory], params[:region],
       # params[:firstName], params[:lastName]);
-    		send_data Registry.all.to_csv }
+    		send_data result.to_csv }
     	# format.xls { send_data @people.to_csv(col_sep: "\t") }
     end
   end
