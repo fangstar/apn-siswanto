@@ -24,16 +24,18 @@
 function callDataTable() {
   $('#data-table').dataTable( {
         "bSort": false,
-        "bPaginate": false,
-        "sDom": 'T<"clear">lfrt',
+        "bPaginate": true,
+        "sDom": 'T<"clear">lfrtip',
         "oTableTools": {
             "sSwfPath": "assets/dataTables/extras/swf/copy_csv_xls.swf"
         }
     } );
 }
-// $(document).ready( function () {
-//     callDataTable() ;
-// } );
+
+
+$(document).ready( function () {
+    callDataTable() ;
+} );
 
 $(document).on('page:change', function() {
   $("#data-table").dataTable().fnDestroy();

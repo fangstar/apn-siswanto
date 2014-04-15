@@ -21,7 +21,7 @@ class RegistriesController < ApplicationController
 
    	# @peoplenopage = result.page(params[:page]).per(10)
     
-    @people       = result.page(params[:page]).per(10)
+    @people       = result
 
     # @people = Registration.find( {first_name: "Angel"});
 
