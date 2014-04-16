@@ -27,7 +27,7 @@ function callDataTable() {
         "bPaginate": true,
         "sDom": 'T<"clear">lfrtip',
         "oTableTools": {
-            "sSwfPath": "assets/dataTables/extras/swf/copy_csv_xls.swf"
+            "sSwfPath": "assets/dataTables/extras/swf/copy_csv_xls_pdf.swf"
         }
     } );
 }
