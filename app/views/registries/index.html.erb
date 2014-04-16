@@ -22,7 +22,7 @@
   }
 </script>
 
-<div class="row">
+<div class="row filter-area">
 <%= form_tag(registries_path, :method => "get", id: "search-form", role: 'form') do %>
 	<div class="row">
 		<div class="span2">
@@ -125,8 +125,10 @@
 <% end %> 
 </div>
 <div class="row">
-Download: <%= link_to "Filtered Product to CSV", registries_path(params.merge(format: "csv")) %>
-<table class="table table-bordered table-striped table-condensed" id="data-table">
+	Download To: <%= link_to "CSV", registries_path(params.merge(format: "csv")) %>
+</div>
+<div class="row">
+<table class="table table-bordered table-striped table-condensed"  id="data-table">
 	<thead>
 		<tr>
 			<th>Dealer Acct #</th>

@@ -49,7 +49,7 @@ class Registry
   	unless fromDate.present? || toDate.present? || purchaseDate.present? || dealerAccount.present? || 
       dealerName.present? || flagship.present? || model.present? || serial.present? || 
       territory.present? || region.present? || firstName.present? || lastName.present?
-  		Registry.all;
+  		Registry.none;
   	else
   		query = {};
   		
@@ -109,10 +109,12 @@ class Registry
   			query[:products] = ele
   		end
       if (territory.present?)
-        query[:territory] = "#{territory}"
+        Rails.logger.debug("My object: #{territory}.upcase")
+        query[:territory] = "#{territory}".upcase
       end
       if (region.present?)
-        query[:region] = "#{region}"
+        Rails.logger.debug("*****My object: " + "#{region}".upcase)
+        query[:region] = "#{region}".upcase
       end
   		if (firstName.present?)
         regex = {}

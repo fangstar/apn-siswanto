@@ -25,9 +25,16 @@ function callDataTable() {
   $('#data-table').dataTable( {
         "bSort": false,
         "bPaginate": true,
+        "iDisplayLength": 25,
         "sDom": 'T<"clear">lfrtip',
         "oTableTools": {
-            "sSwfPath": "assets/dataTables/extras/swf/copy_csv_xls_pdf.swf"
+            "aButtons": [
+                      {
+                        "sExtends" : "print",
+                        "sButtonText": "Print",
+                        "sToolTip": "Print"
+                      }
+                    ]
         }
     } );
 }
