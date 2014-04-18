@@ -1,151 +1,177 @@
-
 <% if false %>
 <% provide(:title, 'Registrations') %>
 <% end %>
 
 <script>
-  $(function() {
-  	<% if false %>
-  	$("#fromDate").datepicker({format: "yyyy-mm-dd"});
-  	$("#toDate").datepicker({format: "yyyy-mm-dd"});
-  	$("#purchaseDate").datepicker({format: "yyyy-mm-dd"});
-  	<% else %>
-  	$("#fromDate").datepicker({format: "mm/dd/yyyy"});
-  	$("#toDate").datepicker({format: "mm/dd/yyyy"});
-  	$("#purchaseDate").datepicker({format: "mm/dd/yyyy"});
+	$(function() {
+		<% if false %>
+		$("#fromDate").datepicker({format: "yyyy-mm-dd"});
+		$("#toDate").datepicker({format: "yyyy-mm-dd"});
+		$("#purchaseDate").datepicker({format: "yyyy-mm-dd"});
+		<% else %>
+		$("#fromDate").datepicker({format: "mm/dd/yyyy"});
+		$("#toDate").datepicker({format: "mm/dd/yyyy"});
+		$("#purchaseDate").datepicker({format: "mm/dd/yyyy"});
 
-  	<% end %>
-  });
-  function printpage()
-  {
-  window.print()
-  }
+		<% end %>
+		$(document).keyup(function(e) {
+			if (e.keyCode == 27) { 
+				$('.filter-area, .action-group, .filtered-data').show(); 
+				$('#print_view').html(''); // clear ups instead of hide
+		  	}   // esc
+		  });
+	});
+
+	function printpage(){
+		$('.filter-area, .action-group, .filtered-data').hide();
+		$('#print_view').show();
+		preparePrint();
+		window.print();
+	}
+
+	function preparePrint(){
+		$.ajax({
+			url: $(location).attr('href')
+		}).done(function(html) {
+			return $("#print_view").html(html);
+		});
+
+	}
+
+
 </script>
 
 <div class="row filter-area">
-<%= form_tag(registries_path, :method => "get", id: "search-form", role: 'form') do %>
+	<%= form_tag(registries_path, :method => "get", id: "search-form", role: 'form') do %>
 	<div class="row">
 		<div class="span2">
-		<%= label_tag(:fromDate, "From Date") %>
+			<%= label_tag(:fromDate, "From Date") %>
 		</div>
 		<div class="span2">
-		<%= text_field_tag(:fromDate, params[:fromDate]) %>
+			<%= text_field_tag(:fromDate, params[:fromDate]) %>
 		</div>
 		<div class="span2">
-		<%= label_tag(:toDate, "To Date") %>
+			<%= label_tag(:toDate, "To Date") %>
 		</div>
 		<div class="span2">
-		<%= text_field_tag(:toDate, params[:toDate]) %>
+			<%= text_field_tag(:toDate, params[:toDate]) %>
 		</div>
 		<div class="span4">
-		<%= label_tag("(Registered Date)") %>
+			<%= label_tag("(Registered Date)") %>
 		</div>		
-<% if false %>		
+		<% if false %>		
 		<div class="span1" style="text-align: right">
-		<%= check_box_tag(:allDates) %>
+			<%= check_box_tag(:allDates) %>
 		</div>
 		<div class="span2">
-		<%= label_tag(:allDates, "All Dates") %>
+			<%= label_tag(:allDates, "All Dates") %>
 		</div>
-<% end %>
+		<% end %>
 	</div>
 	<div class="row">
 		<div class="span2">
-		<%= label_tag(:firstName, "First Name") %>
+			<%= label_tag(:firstName, "First Name") %>
 		</div>
 		<div class="span2">
-		<%= text_field_tag(:firstName, params[:firstName]) %>
+			<%= text_field_tag(:firstName, params[:firstName]) %>
 		</div>
 		<div class="span2">
-		<%= label_tag(:lastName, "Last Name") %>
+			<%= label_tag(:lastName, "Last Name") %>
 		</div>
 		<div class="span2">
-		<%= text_field_tag(:lastName, params[:lastName]) %>
-		</div>
-	</div>
-	<div class="row">
-		<div class="span2">
-		<%= label_tag(:purchaseDate, "Purchase Date") %>
-		</div>
-		<div class="span2">
-		<%= text_field_tag(:purchaseDate, params[:purchaseDate]) %>
-		</div>
-		<div class="span2">
-		<%= label_tag(:model, "Model") %>
-		</div>
-		<div class="span2">
-		<%= text_field_tag(:model, params[:model]) %>
-		</div>
-		<div class="span2">
-		<%= label_tag(:serialNumber, "Serial Number") %>
-		</div>
-		<div class="span2">
-		<%= text_field_tag(:serialNumber, params[:serialNumber]) %>
+			<%= text_field_tag(:lastName, params[:lastName]) %>
 		</div>
 	</div>
 	<div class="row">
 		<div class="span2">
-		<%= label_tag(:dealerAccount, "Dealer Account") %>
+			<%= label_tag(:purchaseDate, "Purchase Date") %>
 		</div>
 		<div class="span2">
-		<%= text_field_tag(:dealerAccount, params[:dealerAccount]) %>
+			<%= text_field_tag(:purchaseDate, params[:purchaseDate]) %>
+		</div>
+		<div class="span2">
+			<%= label_tag(:model, "Model") %>
+		</div>
+		<div class="span2">
+			<%= text_field_tag(:model, params[:model]) %>
+		</div>
+		<div class="span2">
+			<%= label_tag(:serialNumber, "Serial Number") %>
+		</div>
+		<div class="span2">
+			<%= text_field_tag(:serialNumber, params[:serialNumber]) %>
+		</div>
+	</div>
+	<div class="row">
+		<div class="span2">
+			<%= label_tag(:dealerAccount, "Dealer Account") %>
+		</div>
+		<div class="span2">
+			<%= text_field_tag(:dealerAccount, params[:dealerAccount]) %>
 		</div>	
 		<div class="span2">
-		<%= label_tag(:dealerName, "Dealer Store") %>
+			<%= label_tag(:dealerName, "Dealer Store") %>
 		</div>
 		<div class="span2">
-		<%= text_field_tag(:dealerName, params[:dealerName]) %>
+			<%= text_field_tag(:dealerName, params[:dealerName]) %>
 		</div>		
 		<div class="span1" style="text-align: right">
-		<%= check_box_tag(:flagship, 'FS', params[:flagship].present?) %>
+			<%= check_box_tag(:flagship, 'FS', params[:flagship].present?) %>
 		</div>
 		<div class="span2">
-		<%= label_tag(:flagship, "Flagship") %>
+			<%= label_tag(:flagship, "Flagship") %>
 		</div>		
 	</div>
 	<div class="row">
 		<div class="span2">
-		<%= label_tag(:region, "Region") %>
+			<%= label_tag(:region, "Region") %>
 		</div>
 		<div class="span2">
-		<%= text_field_tag(:region, params[:region]) %>
+			<%= text_field_tag(:region, params[:region]) %>
 		</div>	
 		<div class="span2">
-		<%= label_tag(:territory, "Territory") %>
+			<%= label_tag(:territory, "Territory") %>
 		</div>
 		<div class="span2">
-		<%= text_field_tag(:territory, params[:terr]) %>
+			<%= text_field_tag(:territory, params[:terr]) %>
 		</div>		
 	</div>	
 	<div class="row">
 		<div class="span12">
-		<%= submit_tag("Filter", :name=> nil, class: 'btn btn-default') %>
+			<%= submit_tag("Filter", :name=> nil, class: 'btn btn-default') %>
 		</div>
 	</div>
-<% end %> 
+	<% end %> 
 </div>
-<div class="row">
-	Download To: <%= link_to "CSV", registries_path(params.merge(format: "csv")) %>
+<div class="row action-group">
+	<div class="btn-group btn-group-justified">
+		<div class="btn-group">
+			<button type="button" class="btn btn-default"><%= link_to "Dowload All Result to Csv", registries_path(params.merge(format: "csv")), class: 'btn-default' %></button>
+		</div>
+		<div class="btn-group">
+			<button type="button" class="btn btn-default" id="print_all_result" onClick="printpage();return true">Print Result On All Page</button>
+		</div>
+	</div>
 </div>
-<div class="row">
-<table class="table table-bordered table-striped table-condensed"  id="data-table">
-	<thead>
-		<tr>
-			<th>Dealer Acct #</th>
-			<th>Dealer</th>
-			<th>Region</th>
-			<th>Territory</th>
-			<th>Warranty<br>(Years)</th>
-			<th>Date of Purchase</th>
-			<th>Registered Date</th>
-			<th>Model #</th>
-			<th>Serial #</th>
-			<th>Customer<br>First Name</th>
-			<th>Customer<br>Last Name</th>
-		</tr>
-	</thead>
-	<tbody>
-		<% @people.each do |person| %>
+<div class="row filtered-data">
+	<table class="table table-bordered table-striped table-condensed"  id="data-table">
+		<thead>
+			<tr>
+				<th>Dealer Acct #</th>
+				<th>Dealer</th>
+				<th>Region</th>
+				<th>Territory</th>
+				<th>Warranty<br>(Years)</th>
+				<th>Date of Purchase</th>
+				<th>Registered Date</th>
+				<th>Model #</th>
+				<th>Serial #</th>
+				<th>Customer<br>First Name</th>
+				<th>Customer<br>Last Name</th>
+			</tr>
+		</thead>
+		<tbody>
+			<% @people.each do |person| %>
 			<% person.products.each do |product| %>
 			<tr>
 				<td><%= person.dealer_account %></td>
@@ -153,9 +179,9 @@
 				<td><%= person.region %></td>
 				<td><%= person.territory %></td>
 				<% if person.flagship == 'FS' %>
-					<td>2</td>
+				<td>2</td>
 				<% else %>
-					<td>1</td>
+				<td>1</td>
 				<% end %>
 				<td><%= person.purchase_date.strftime("%m/%d/%Y") %></td>
 				<td><%= person.registered_date.strftime("%m/%d/%Y") %></td>
@@ -167,9 +193,13 @@
 				<td><%= person.last_name %></td>			  
 			</tr>
 			<% end %>
-		<% end %> 
-	</tbody>
-</table>
+			<% end %> 
+		</tbody>
+	</table>
+	<%= paginate @people %>
+</div>
+
+<div class="row hide" id="print_view">
 </div>
 
 

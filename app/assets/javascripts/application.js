@@ -26,7 +26,7 @@ function callDataTable() {
         "bSort": false,
         "bPaginate": true,
         "iDisplayLength": 25,
-        "sDom": 'T<"clear">lfrtip',
+        "sDom": 'T<"clear">lfrt',
         "oTableTools": {
             "aButtons": [
                       {

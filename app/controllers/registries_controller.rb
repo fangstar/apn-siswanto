@@ -4,8 +4,8 @@ class RegistriesController < ApplicationController
   # GET /registries
   # GET /registries.json
   def index
-   # @registrations = Registration.all.page params[:page]
-   # @people = Registration.all.page params[:page]  
+    # @registrations = Registration.all.page params[:page]
+    # @people = Registration.all.page params[:page]  
     result        = Registry.search(params[:fromDate],
                                     params[:toDate],
                                     params[:purchaseDate],
@@ -19,12 +19,14 @@ class RegistriesController < ApplicationController
                                     params[:firstName], 
                                     params[:lastName])
 
-   	# @peoplenopage = result.page(params[:page]).per(10)
-    
-    @people       = result
+    @people       = result.page(params[:page]).per(10)
 
     # @people = Registration.find( {first_name: "Angel"});
-
+    if request.xhr?
+      @people       = result; 
+      render(:print_view, :layout => false)
+      return 
+    end
     respond_to do |format|
     	format.html
     	format.csv { 

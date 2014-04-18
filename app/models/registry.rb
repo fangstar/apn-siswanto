@@ -49,7 +49,7 @@ class Registry
   	unless fromDate.present? || toDate.present? || purchaseDate.present? || dealerAccount.present? || 
       dealerName.present? || flagship.present? || model.present? || serial.present? || 
       territory.present? || region.present? || firstName.present? || lastName.present?
-  		Registry.none;
+  		Registry.all;
   	else
   		query = {};
   		

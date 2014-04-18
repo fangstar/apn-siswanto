@@ -1,0 +1,42 @@
+<table class="table table-bordered table-striped table-condensed"  id="print-table">
+  <thead>
+    <tr>
+      <th>Dealer Acct #</th>
+      <th>Dealer</th>
+      <th>Region</th>
+      <th>Territory</th>
+      <th>Warranty<br>(Years)</th>
+      <th>Date of Purchase</th>
+      <th>Registered Date</th>
+      <th>Model #</th>
+      <th>Serial #</th>
+      <th>Customer<br>First Name</th>
+      <th>Customer<br>Last Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @people.each do |person| %>
+    <% person.products.each do |product| %>
+    <tr>
+      <td><%= person.dealer_account %></td>
+      <td><%= person.dealer_store %></td>
+      <td><%= person.region %></td>
+      <td><%= person.territory %></td>
+      <% if person.flagship == 'FS' %>
+      <td>2</td>
+      <% else %>
+      <td>1</td>
+      <% end %>
+      <td><%= person.purchase_date.strftime("%m/%d/%Y") %></td>
+      <td><%= person.registered_date.strftime("%m/%d/%Y") %></td>
+
+      <td><%= product['model'] %></td>
+
+      <td><%= product['serial'] %></td>
+      <td><%= person.first_name %></td>
+      <td><%= person.last_name %></td>        
+    </tr>
+    <% end %>
+    <% end %> 
+  </tbody>
+</table>
