@@ -1,0 +1,8 @@
+@media print {
+  .filter-area, .action-group, .filtered-data, header, footer {
+    display: none;
+  }
+  #print_view {
+    display: block;
+  }
+}
