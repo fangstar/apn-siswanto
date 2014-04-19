@@ -3,6 +3,7 @@ defaults: &defaults
     - admin
     - moderator
     - user
+    - marketing
   default_role: user
 
 development:
