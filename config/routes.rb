@@ -1,6 +1,7 @@
 ApnSiswanto::Application.routes.draw do
   
-
+  resources :pages
+  
   get 'admin', :to => 'admin#index', :via => [:get, :post]
   namespace :admin do
     resources :users, :except => [:index]
